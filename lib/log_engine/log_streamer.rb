@@ -1,40 +1,41 @@
 class LogStreamer
-
-  def self.start_log_stream(filename, file_key)
+  def self.start_log_stream(filename)
     start_sweeper
-    start_producer(filename, file_key, LogStream.new)
+    add_stream(filename).key
   end
-  
-  def self.log_messages(file_key, key)
-    producers[file_key].streams[key].log_messages
-  end
+
+  def self.log_messages(key)
+    return [] if streams[key].nil?
     
-  def self.producers
-    @@producers ||= Hash.new
+    streams[key].log_messages
   end
-  
-  def self.start_producer(filename, file_key, stream)
-    if(producers.has_key?(file_key))
-       producers[file_key].add_stream(stream) 
-    else
-      puts "Starting new log producer for #{filename}."
-      producers[file_key] = LogProducer.new(:filename => filename, :stream => stream)
-      producers[file_key].start
-    end
-    stream.key
+
+  def self.streams
+    @@streams ||= Hash.new
   end
-  
-  def self.start_sweeper  
+
+  def self.add_stream(filename)
+    stream = LogStream.new(filename)
+    streams[stream.key] = stream
+    stream.start
+    stream
+  end
+
+  def self.remove_stream(key)
+    streams[key].stop
+    streams.delete(key)
+  end
+
+  def self.start_sweeper
     @@sweeper ||= Thread.new do
       while(1) do
-        producers.each do |k, p|
-          if(p.should_stop?)
-            puts "Stopping producer thread."
-            p.stop 
-            producers.delete(k)
+        streams.each do |k, s|
+          if(s.idle?)
+            puts "Stopping thread."
+            remove_stream(k)
           end
         end
-        sleep(5)
+        sleep(60)
       end
     end
   end

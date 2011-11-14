@@ -1,11 +1,13 @@
 require 'digest'
+require 'file/tail'
 
 class LogStream
   IDLE_THRESHOLD = 60
   
   attr_accessor :queue, :key, :filename
   
-  def initialize()
+  def initialize(filename)
+    @filename = filename
     @queue = Queue.new
     @key = generate_hash
     @last_read_at = seconds
@@ -43,5 +45,21 @@ class LogStream
   
   def seconds
     Time.now.to_i
+  end
+
+  def start
+    @thread = Thread.new do
+      begin
+        File::Tail::Logfile.tail(@filename, :backward => 50) do |line|
+          @queue << line.strip
+        end
+      rescue
+        puts "Error starting LogStream thread - #{$!}."
+      end
+    end
+  end
+
+  def stop
+    @thread.kill
   end
 end
