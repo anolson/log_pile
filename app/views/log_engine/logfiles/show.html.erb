@@ -1,2 +1,25 @@
 <h3><%= @file[:name] %></h3>
-<pre id="messages" data-stream-key="<%= @key %>"></pre>
+
+<div class="clearfix">
+	<pre id="messages" data-poller-location="<%= poll_path(:key => @key) %>"></pre>
+</div>
+
+<div class="row">
+	<div id="loader" class="center hidden">
+		<%= image_tag "log_engine/ajax-loader.gif" %>
+	</div>
+</div>
+
+<div class="row">
+	<div class="span8">
+		<span class="help-block"><strong>Note:</strong>	Scroll to the bottom to automatically scroll.</span>
+	</div>
+	<div class="span8">
+		<form class="pull-right">
+			<div class="input">
+				<input id="append-log-messages" type="checkbox" checked />
+				<span>Append new log messages</span>
+			</div>
+		</form>
+	</div>
+</div>
