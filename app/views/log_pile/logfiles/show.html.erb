@@ -1,7 +1,7 @@
 <h3><%= @file[:name] %></h3>
 
 <div class="clearfix">
-	<pre id="messages" data-poller-location="<%= poll_path(:key => @key) %>"></pre>
+	<pre id="messages" data-poller-location="<%= poll_logfiles_path(:key => @key) %>"></pre>
 </div>
 
 <div class="row">
