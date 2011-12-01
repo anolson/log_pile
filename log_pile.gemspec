@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 3.1.1"
   s.add_dependency "file-tail"
+  s.add_dependency "rake", "~> 0.8.7"
   # s.add_dependency "jquery-rails"
 
   s.add_development_dependency "sqlite3"
