@@ -1,4 +1,4 @@
 # desc "Explaining what the task does"
-# task :log_engine do
+# task :log_pile do
 #   # Task goes here
 # end

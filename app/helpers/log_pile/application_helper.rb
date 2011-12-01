@@ -1,4 +1,4 @@
-module LogEngine
+module LogPile
   module ApplicationHelper
   end
 end

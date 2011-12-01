@@ -1,3 +1,3 @@
-module LogEngine
+module LogPile
   VERSION = "0.0.1"
 end

@@ -1,4 +1,4 @@
-module LogEngine
+module LogPile
   class LogfilesController < ApplicationController
     def index
       @files = files

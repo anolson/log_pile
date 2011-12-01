@@ -1,6 +1,6 @@
 require 'test_helper'
 
-module LogEngine
+module LogPile
   class LogfilesHelperTest < ActionView::TestCase
   end
 end

@@ -1,4 +1,4 @@
-LogEngine::Engine.routes.draw do
+LogPile::Engine.routes.draw do
   resources :logfiles
   
   match '/:permalink/poll' => 'logfiles#poll', :as => 'poll'
