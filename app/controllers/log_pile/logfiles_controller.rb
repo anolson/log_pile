@@ -6,21 +6,17 @@ module LogPile
     
     def show
       @file = Logfile.find_by_permalink(params[:id])
-      @key = LogStreamer.start_log_stream(@file.path)
+      @key = log_streamer.start_log_stream(@file.path)
     end
     
     def poll    
-      messages = LogStreamer.log_messages(params[:key])
+      messages = log_streamer.log_messages(params[:key])
       render :text => messages.join("\n")
     end
     
-    private    
-      def find_file_by_key(key)
-        {:key => key, :name => files[key]}
-      end
-      
-      def files
-        {'app' => Rails.application.config.paths["log"].first}
+    private
+      def log_streamer
+        LogStreamer.instance
       end    
   end
 end
