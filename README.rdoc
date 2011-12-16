@@ -1,3 +1,33 @@
 = log_pile
 
-A Rails engine for viewing log files.
+A Rails 3.1 mountable engine for viewing log files.
+
+== Installation
+
+  gem 'log-pile', :git => 'git://github.com/anolson/log_pile.git'
+
+== Database stuff
+
+If you want to load seed data, update <tt>seeds.rb</tt> with:
+
+  LogPile::Engine.load_seed
+
+Migrate your database.
+
+  rake db:migrate
+
+== Mount engine
+
+Update <tt>routes.rb</tt> with:
+
+  mount LogPile::Engine => "/logs"
+
+== Authentication
+
+You might want to limit access to your log files.  One solution is to use {devise}[https://github.com/plataformatec/devise].
+
+Update <tt>routes.rb</tt> with:
+
+  authenticate(:admin) do
+    mount LogPile::Engine => "/logs"
+  end
