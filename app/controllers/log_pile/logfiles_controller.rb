@@ -1,5 +1,5 @@
 module LogPile
-  class LogfilesController < ApplicationController
+  class LogfilesController < ApplicationController  
     def index
       @files = Logfile.all
     end
