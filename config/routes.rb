@@ -1,5 +1,5 @@
 LogPile::Engine.routes.draw do
-  resources :logfiles, :only => [:index, :show] do
+  resources :logfiles, :only do
     get 'poll', :on => :collection
   end
   
