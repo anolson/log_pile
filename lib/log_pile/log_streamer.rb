@@ -1,42 +1,51 @@
+require 'singleton'
+
 class LogStreamer
-  def self.start_log_stream(filename)
+  include Singleton
+
+  def start_log_stream(filename)
     start_sweeper
     add_stream(filename).key
   end
 
-  def self.log_messages(key)
+  def log_messages(key)
     return [] if streams[key].nil?
-    
     streams[key].log_messages
   end
 
-  def self.streams
-    @@streams ||= Hash.new
-  end
+  private
+    def streams
+      @streams ||= Hash.new
+    end
 
-  def self.add_stream(filename)
-    stream = LogStream.new(filename)
-    streams[stream.key] = stream
-    stream.start
-    stream
-  end
+    def add_stream(filename)
+      stream = LogStream.new(filename)
+      streams[stream.key] = stream
+      stream.start
+      stream
+    end
 
-  def self.remove_stream(key)
-    streams[key].stop
-    streams.delete(key)
-  end
+    def remove_stream(key)
+      streams[key].stop
+      streams.delete(key)
+    end
 
-  def self.start_sweeper
-    @@sweeper ||= Thread.new do
-      while(1) do
-        streams.each do |k, s|
-          if(s.idle?)
-            puts "Stopping thread."
-            remove_stream(k)
-          end
+    def start_sweeper
+      @sweeper ||= start_sweeper_thread
+    end
+
+    def start_sweeper_thread
+      Thread.new do
+        while(1) do
+          remove_idle_streams
+          sleep(60)
         end
-        sleep(60)
       end
     end
-  end
+
+    def remove_idle_streams
+      streams.each do |k, s|
+        remove_stream(k) if(s.idle?)
+      end
+    end
 end

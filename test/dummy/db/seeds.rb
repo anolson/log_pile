@@ -1,0 +1,1 @@
+LogPile::Engine.load_seed

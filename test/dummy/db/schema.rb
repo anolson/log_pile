@@ -11,11 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111201021353) do
+ActiveRecord::Schema.define(:version => 20111201211651) do
 
   create_table "log_pile_logfiles", :force => true do |t|
     t.string   "name"
     t.string   "path"
+    t.string   "permalink"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

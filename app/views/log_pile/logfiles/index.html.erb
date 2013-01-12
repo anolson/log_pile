@@ -1,24 +1,31 @@
+<section>
+  <p class="pull-right">
+    <%= link_to "Add log file", new_logfile_path, :class => :btn %>
+  </p>
+</section>
 
-<table class="bordered-table">
-	<thead>
-		<tr>
-			<th>Path</th>
-			<th>Last Modified</th>
-		</tr>		
-	</thead>
-	<tbody>
-		<% @files.each do |key, file| %>
-		  <tr>
-		  	<td>
-		  		<%= link_to file, permalink_path(:permalink => key) %>
-		  	</td>
-		  	<td>
-		  		Tue Jun 28 16:00:20 EDT 2011	
-		  	</td>
-		  	<td>
-		  		Edit
-		  	</td>
-		  </tr>	
-		<% end %>		
-	</tbody>
-</table>
+<section>
+  <table class="bordered-table">
+    <thead>
+      <tr>
+        <th>Path</th>
+        <th>Last Modified</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @files.each do |file| %>
+        <tr>
+          <td>
+            <%= link_to file.name, logfile_path(file) %>
+          </td>
+          <td>
+            <%= file.file_last_modified %>
+          </td>
+          <td>
+            Edit
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>
