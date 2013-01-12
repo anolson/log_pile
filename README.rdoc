@@ -14,7 +14,7 @@ If you want to load seed data, update <tt>seeds.rb</tt> with:
 
 Migrate your database.
 
-  rake db:migrate
+  rake log_pile:install:migrations db:migrate
 
 == Mount engine
 
